@@ -290,18 +290,25 @@ export function Modal({
 }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4" onClick={onClose}>
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        className="w-full max-w-md rounded-xl border border-border bg-surface shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="border-b border-border px-5 py-3">
-          <h2 className="text-base font-semibold">{title}</h2>
+    // The OVERLAY is the scroll container. A dialog taller than the viewport
+    // must never be hard-centered by the overlay (that clips its top AND
+    // bottom with no way to reach either) — `min-h-full` + `items-center`
+    // centers short dialogs while a tall one starts at the top and the
+    // overlay scrolls.
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/30" onClick={onClose}>
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          className="w-full max-w-md rounded-xl border border-border bg-surface shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="border-b border-border px-5 py-3">
+            <h2 className="text-base font-semibold">{title}</h2>
+          </div>
+          {children}
         </div>
-        {children}
       </div>
     </div>
   );
