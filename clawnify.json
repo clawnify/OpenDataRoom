@@ -1,0 +1,41 @@
+{
+  "$schema": "https://app.clawnify.com/schema/v1/clawnify.json",
+  "version": 1,
+  "name": "Open DataRoom",
+  "description": "The document-sharing app your AI employee runs. It sends trackable links, watches who reads what page by page, and messages you when a visit matters. Email gates, allow lists, passcodes, watermarks, NDAs and expiry per link; branded data rooms with folders; visit notifications delivered straight to your agent. An open-source alternative to DocSend.",
+  "icon": "icon.svg",
+  "tags": ["documents", "data-room", "document-sharing", "link-tracking", "analytics", "pitch-deck", "due-diligence"],
+
+  "app": {
+    "framework": "react+hono",
+    "database": true,
+    "storage": true
+  },
+
+  "api": {
+    "public_routes": [
+      { "path": "/view/*", "methods": ["GET"] },
+      { "path": "/api/view/**", "methods": ["GET", "POST"] }
+    ]
+  },
+
+  "deploy": {
+    "title": "Deploy your Open DataRoom",
+    "subtitle": "Your agent sends the links, tracks every page read, and tells you when it matters.",
+    "prompts": [
+      {
+        "key": "company_name",
+        "label": "Company or team name",
+        "placeholder": "e.g. Northwind Capital",
+        "required": true
+      },
+      {
+        "key": "use_case",
+        "label": "What will you share?",
+        "placeholder": "e.g. Pitch decks to investors, proposals to clients"
+      }
+    ]
+  },
+
+  "agent": "agent.md"
+}

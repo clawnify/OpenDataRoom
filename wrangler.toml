@@ -1,0 +1,23 @@
+name = "open-dataroom"
+main = "src/server/index.ts"
+compatibility_date = "2026-04-15"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+# Run the Worker first for API routes so the SPA fallback can't intercept them.
+# /view/* is the public viewer page (server-rendered HTML) — without this a
+# navigation GET to /view/{link} would be served index.html instead.
+# /llms.txt is the agent discovery index served by createApp — same deal.
+run_worker_first = ["/api/*", "/view/*", "/llms.txt"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "open-dataroom-db"
+database_id = "local"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "open-dataroom-uploads"
