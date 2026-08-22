@@ -57,7 +57,7 @@ pnpm typecheck
 
 ## Deploy with Clawnify
 
-[![Deploy with Clawnify](https://app.clawnify.com/deploy-badge.svg)](https://app.clawnify.com/deploy?repo=clawnify/open-dataroom)
+[![Deploy with Clawnify](https://app.clawnify.com/deploy-badge.svg)](https://app.clawnify.com/deploy?repo=clawnify/OpenDataRoom)
 
 One click provisions the app with its database and storage, wires it to your
 AI employee, and serves it on your own URL. From then on you just say "send
