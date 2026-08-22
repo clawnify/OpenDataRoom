@@ -23,7 +23,7 @@ export default function App() {
             unbroken line across the app. */}
         <div className="flex h-14 items-center gap-2 border-b border-border px-4">
           <FileText className="size-4 text-primary" strokeWidth={2.5} />
-          <span className="text-sm font-semibold">Open DataRoom</span>
+          <span className="text-sm font-semibold">OpenDataRoom</span>
         </div>
         <nav className="p-2">
           <div className="px-2 py-1.5">

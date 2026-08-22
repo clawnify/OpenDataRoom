@@ -1,7 +1,7 @@
 {
   "$schema": "https://app.clawnify.com/schema/v1/clawnify.json",
   "version": 1,
-  "name": "Open DataRoom",
+  "name": "OpenDataRoom",
   "description": "The document-sharing app your AI employee runs. It sends trackable links, watches who reads what page by page, and messages you when a visit matters. Email gates, allow lists, passcodes, watermarks, NDAs and expiry per link; branded data rooms with folders; visit notifications delivered straight to your agent. An open-source alternative to DocSend.",
   "icon": "icon.svg",
   "tags": [
@@ -39,7 +39,7 @@
     ]
   },
   "deploy": {
-    "title": "Deploy your Open DataRoom",
+    "title": "Deploy your OpenDataRoom",
     "subtitle": "Your agent sends the links, tracks every page read, and tells you when it matters.",
     "prompts": [
       {
