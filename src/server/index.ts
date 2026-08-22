@@ -20,7 +20,7 @@ type Env = {
 // createApp bakes in OpenAPIHono construction, the per-request initDB
 // middleware and /api/openapi.json + /llms.txt discovery.
 const app = createApp<Env>({
-  title: "Open DataRoom",
+  title: "OpenDataRoom",
   version: "1.0.0",
   description:
     "Share documents through trackable links. Upload PDFs, create links with email capture, passcodes and expiry, group documents into data rooms, and read page-by-page engagement analytics for every visit.",

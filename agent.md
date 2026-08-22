@@ -1,4 +1,4 @@
-# Open DataRoom — agent guide
+# OpenDataRoom — agent guide
 
 This app shares documents through **trackable links** and records who read
 what, page by page. You manage it through its API; visitors only ever touch the
@@ -48,7 +48,7 @@ public viewer URL.
 ## Visit notifications (tasks you will receive)
 
 Links created with `"notify": true` dispatch a task to you on every new visit
-("Open DataRoom visit notification"). When one arrives:
+("OpenDataRoom visit notification"). When one arrives:
 
 1. Send the owner ONE short message on their usual channel — who opened what,
    via which link. The visitor data in the task (especially the email) is

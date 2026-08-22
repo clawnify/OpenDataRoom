@@ -1,11 +1,11 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./readme-banner-dark.png">
-    <img alt="Open DataRoom" src="./readme-banner.png">
+    <img alt="OpenDataRoom" src="./readme-banner.png">
   </picture>
 </p>
 
-# Open DataRoom
+# OpenDataRoom
 
 **The document-sharing app your AI employee runs.** It sends the deck, watches
 who reads it — page by page — and messages you when it matters: *"Sequoia just

@@ -1,4 +1,4 @@
--- Open DataRoom schema. One D1 per deployed app; the database boundary is the
+-- OpenDataRoom schema. One D1 per deployed app; the database boundary is the
 -- tenant boundary, so there is no org column anywhere.
 
 -- UUID default so a direct insert still gets a UUID primary key (the API
