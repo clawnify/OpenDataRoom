@@ -129,3 +129,14 @@
     color: var(--muted);
   }
 }
+
+/* iOS Safari zooms the whole page when a focused control's font is under 16px,
+ * which strands the layout mid-form. The !important outranks Tailwind's text
+ * utilities. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 1rem !important;
+  }
+}

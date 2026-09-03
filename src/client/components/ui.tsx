@@ -2,6 +2,7 @@
 // deliberately different shapes so a glance tells you which you're reading.
 
 import type { ReactNode } from "react";
+import { MobileNav } from "./mobile-nav";
 
 export function Eyebrow({ children, right }: { children: ReactNode; right?: ReactNode }) {
   return (
@@ -162,10 +163,13 @@ export function Toolbar({ title, subtitle, children }: { title: ReactNode; subti
     // h-14 matches the sidebar brand row so the two bottom borders form one
     // unbroken line. Never height this from padding — it drifts the moment a
     // page has no subtitle.
-    <div className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b border-border bg-background px-6">
+    <div className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b border-border bg-background px-4 md:px-6">
+      <div className="flex min-w-0 items-center gap-1">
+        <MobileNav />
       <div className="min-w-0">
         <h1 className="truncate text-xl font-bold tracking-[-0.01em]">{title}</h1>
         {subtitle ? <p className="truncate text-xs text-muted">{subtitle}</p> : null}
+      </div>
       </div>
       <div className="flex shrink-0 items-center gap-2">{children}</div>
     </div>
