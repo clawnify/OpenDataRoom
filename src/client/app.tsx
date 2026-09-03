@@ -1,18 +1,12 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
-import { FileText, FolderOpen, Settings2, Users } from "lucide-react";
+import { FileText } from "lucide-react";
+import { NAV } from "./nav";
 import Documents from "./routes/documents";
 import DocumentDetail from "./routes/document";
 import Datarooms from "./routes/datarooms";
 import DataroomDetail from "./routes/dataroom";
 import Visitors from "./routes/visitors";
 import Settings from "./routes/settings";
-
-const NAV = [
-  { to: "/documents", label: "Documents", icon: FileText },
-  { to: "/datarooms", label: "Data rooms", icon: FolderOpen },
-  { to: "/visitors", label: "Visitors", icon: Users },
-  { to: "/settings", label: "Settings", icon: Settings2 },
-];
 
 export default function App() {
   return (
