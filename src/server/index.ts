@@ -1197,10 +1197,15 @@ const putSettings = createRoute({
 app.openapi(putSettings, async (c) => {
   const body = c.req.valid("json");
   const s = await readSettings();
-  await run("UPDATE settings SET company_name = ?, accent_color = ? WHERE id = 1", [
-    body.company_name ?? s.company_name,
-    body.accent_color ?? s.accent_color,
-  ]);
+  // Upsert, not UPDATE: the singleton row is not seeded by schema.sql, so it
+  // does not exist until the first write. A bare UPDATE would match zero rows
+  // and drop the change silently.
+  await run(
+    "INSERT INTO settings (id, company_name, accent_color) VALUES (1, ?, ?) " +
+      "ON CONFLICT(id) DO UPDATE SET company_name = excluded.company_name, " +
+      "accent_color = excluded.accent_color",
+    [body.company_name ?? s.company_name, body.accent_color ?? s.accent_color],
+  );
   const next = await readSettings();
   return c.json({ company_name: next.company_name, accent_color: next.accent_color, has_logo: next.logo_key !== "" } as never);
 });
@@ -1236,7 +1241,11 @@ app.openapi(uploadLogo, async (c) => {
   if (file.size > MAX_LOGO_BYTES) return c.json({ error: "The logo must be 2 MB or smaller." } as never, 413);
   const key = "branding/logo";
   await c.env.UPLOADS.put(key, await file.arrayBuffer(), { httpMetadata: { contentType: file.type } });
-  await run("UPDATE settings SET logo_key = ? WHERE id = 1", [key]);
+  await run(
+    "INSERT INTO settings (id, logo_key) VALUES (1, ?) " +
+      "ON CONFLICT(id) DO UPDATE SET logo_key = excluded.logo_key",
+    [key],
+  );
   const s = await readSettings();
   return c.json({ company_name: s.company_name, accent_color: s.accent_color, has_logo: true } as never);
 });

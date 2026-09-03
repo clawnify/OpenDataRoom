@@ -148,11 +148,12 @@ CREATE TABLE IF NOT EXISTS page_views (
   PRIMARY KEY (view_id, page)
 );
 
--- Workspace branding shown on the public viewer. Singleton row.
+-- Workspace branding shown on the public viewer. Singleton row (id = 1),
+-- created on first write by the upserts in index.ts. This file is DDL only:
+-- reads fall back to empty defaults until that first write.
 CREATE TABLE IF NOT EXISTS settings (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   company_name TEXT NOT NULL DEFAULT '',
   logo_key TEXT NOT NULL DEFAULT '',
   accent_color TEXT NOT NULL DEFAULT ''
 );
-INSERT OR IGNORE INTO settings (id) VALUES (1);
