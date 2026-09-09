@@ -61,6 +61,7 @@ export default function Settings() {
                 </Field>
                 <Field label="Accent color" hint="Hex color for the viewer's accents — the gate bar, buttons and data room cover.">
                   <span className="flex items-center gap-2">
+                    {/* design-lint: allow — an example of the hex a USER types for their own brand, not a colour this app paints with. */}
                     <Input value={accentColor} onChange={(e) => setAccentColor(e.target.value)} placeholder="#1A6E63" className="max-w-40" />
                     <span
                       aria-hidden="true"

@@ -54,10 +54,12 @@ export default function Documents() {
             e.target.value = "";
           }}
         />
-        <Button variant="primary" disabled={uploading} onClick={() => fileInput.current?.click()}>
-          <Upload className="size-4" />
-          {uploading ? "Uploading…" : "Upload document"}
-        </Button>
+        {docs.length > 0 || search ? (
+          <Button variant="primary" disabled={uploading} onClick={() => fileInput.current?.click()}>
+            <Upload className="size-4" />
+            {uploading ? "Uploading…" : "Upload document"}
+          </Button>
+        ) : null}
       </Toolbar>
 
       <div className="p-6">
@@ -80,15 +82,15 @@ export default function Documents() {
 
         {docs.length === 0 ? (
           search ? (
-            <Empty title={`No documents match “${search}”`} action={<Button onClick={() => setSearch("")}>Clear search</Button>} />
+            <Empty title={`No documents match “${search}”`} action={<Button variant="ghost" onClick={() => setSearch("")}>Clear search</Button>} />
           ) : (
             <Empty
               title="No documents yet"
               hint="Upload a PDF, then create a share link to start tracking who reads it."
               action={
-                <Button onClick={() => fileInput.current?.click()}>
+                <Button variant="primary" disabled={uploading} onClick={() => fileInput.current?.click()}>
                   <Upload className="size-4" />
-                  Upload document
+                  {uploading ? "Uploading…" : "Upload document"}
                 </Button>
               }
             />
@@ -97,7 +99,7 @@ export default function Documents() {
           <div className="-mx-6 overflow-x-auto">
             <table className="w-full text-[0.8125rem]">
               <thead>
-                <tr className="border-y border-border bg-sunken text-left text-xs font-semibold tracking-[0.04em] text-muted">
+                <tr className="border-y border-border bg-sunken text-left text-[0.8125rem] font-medium text-muted">
                   <th className="px-3 py-2.5 first:pl-6">Name</th>
                   <th className="data px-3 py-2.5 text-right">Pages</th>
                   <th className="data px-3 py-2.5 text-right">Size</th>
