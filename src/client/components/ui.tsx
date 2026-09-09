@@ -2,12 +2,11 @@
 // deliberately different shapes so a glance tells you which you're reading.
 
 import type { ReactNode } from "react";
-import { MobileNav } from "./mobile-nav";
 
 export function Eyebrow({ children, right }: { children: ReactNode; right?: ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="eyebrow">{children}</span>
+      <span className="section-label">{children}</span>
       {right ? <span className="data text-[0.6875rem] text-faint">{right}</span> : null}
     </div>
   );
@@ -15,7 +14,7 @@ export function Eyebrow({ children, right }: { children: ReactNode; right?: Reac
 
 /** A card is anatomy, not a padded box: stacked zones split by hairlines. */
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-lg border border-border bg-surface ${className}`}>{children}</div>;
+  return <div className={`rounded-md bg-surface shadow-edge ${className}`}>{children}</div>;
 }
 
 export function Zone({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -25,7 +24,7 @@ export function Zone({ children, className = "" }: { children: ReactNode; classN
 /** Enumerable fact — file type, page count, gate settings. Quiet by design. */
 export function Chip({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-sm border border-border bg-sunken px-1.5 py-0.5 text-[0.6875rem] text-muted">
+    <span className="inline-flex items-center gap-1 rounded-xs bg-sunken px-2 py-0.5 text-xs text-muted">
       {children}
     </span>
   );
@@ -69,13 +68,17 @@ export function Button({
   // shrink-0 + whitespace-nowrap: a button label must never wrap — in a fixed
   // height toolbar a wrapped label overflows the row.
   const base =
-    "inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-2 h-8 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
+    "inline-flex h-7 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm px-2 text-sm font-medium transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none";
   const variants = {
     // Darkens on hover, never lightens. Exactly one of these per screen.
-    primary: "bg-primary text-on-primary hover:bg-primary-hover",
-    secondary: "border border-border bg-surface text-foreground hover:bg-sunken",
+    primary: "bg-primary text-on-primary shadow-[var(--edge-solid)] hover:bg-primary-hover",
+    // White, and the edge is a shadow RING rather than a border: it reads
+    // crisper than a 1px line at 28px, and costs no layout.
+    secondary: "bg-surface text-foreground shadow-raised hover:bg-sunken",
     ghost: "text-muted hover:bg-sunken hover:text-foreground",
-    danger: "border border-border bg-surface text-danger hover:bg-danger-tint",
+    // Danger tint at rest, filling solid only on hover — a delete that is
+    // already loud at rest makes every screen it sits on loud.
+    danger: "bg-danger-tint text-danger hover:bg-danger-solid hover:text-on-primary",
   };
   return (
     <button type={type} onClick={onClick} disabled={disabled} title={title} className={`${base} ${variants[variant]} ${className}`}>
@@ -88,7 +91,7 @@ export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`h-9 w-full rounded-sm border border-border bg-surface px-2.5 text-[0.8125rem] text-foreground placeholder:text-faint focus:border-ring focus:outline-none ${props.className ?? ""}`}
+      className={`h-8 w-full rounded-sm bg-surface px-3 text-[0.9375rem] text-foreground shadow-edge outline-none transition-shadow duration-150 placeholder:text-faint focus:shadow-[inset_0_0_0_1px_var(--ring),0_0_0_3px_var(--accent-tint)] ${props.className ?? ""}`}
     />
   );
 }
@@ -165,7 +168,6 @@ export function Toolbar({ title, subtitle, children }: { title: ReactNode; subti
     // page has no subtitle.
     <div className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b border-border bg-background px-4 md:px-6">
       <div className="flex min-w-0 items-center gap-1">
-        <MobileNav />
       <div className="min-w-0">
         <h1 className="truncate text-xl font-bold tracking-[-0.01em]">{title}</h1>
         {subtitle ? <p className="truncate text-xs text-muted">{subtitle}</p> : null}
@@ -212,8 +214,8 @@ export function Segmented<T extends string>({
 export function Stat({ label, value, meta }: { label: string; value: ReactNode; meta?: ReactNode }) {
   return (
     <div>
-      <span className="eyebrow">{label}</span>
-      <div className="data mt-1 text-2xl font-bold leading-tight">{value}</div>
+      <span className="stat-label">{label}</span>
+      <div className="data mt-1 text-[1.375rem] font-semibold leading-tight tracking-[-0.01em]">{value}</div>
       <div className="data h-4 text-[0.6875rem] text-muted">{meta ?? ""}</div>
     </div>
   );
@@ -299,13 +301,13 @@ export function Modal({
     // bottom with no way to reach either) — `min-h-full` + `items-center`
     // centers short dialogs while a tall one starts at the top and the
     // overlay scrolls.
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/30" onClick={onClose}>
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-foreground/25 p-4" onClick={onClose}>
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           role="dialog"
           aria-modal="true"
           aria-label={title}
-          className="w-full max-w-md rounded-xl border border-border bg-surface shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
+          className="w-full max-w-md rounded-lg bg-surface shadow-float"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="border-b border-border px-5 py-3">
