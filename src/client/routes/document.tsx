@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Download, Plus } from "lucide-react";
 import {
@@ -16,6 +16,8 @@ import { PageBarChart } from "../components/chart";
 import { LinkDialog, LinksTable } from "../components/links";
 import { Button, Card, CompletionRing, ConfirmDialog, Empty, Eyebrow, Stat, Toolbar, Zone } from "../components/ui";
 
+const PdfPreview = lazy(() => import("../components/pdf-preview"));
+
 export default function DocumentDetail() {
   const { id = "" } = useParams();
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ export default function DocumentDetail() {
   const [visitTotal, setVisitTotal] = useState(0);
   const [visitPage, setVisitPage] = useState(1);
   const [creating, setCreating] = useState(false);
+  const [previewing, setPreviewing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [missing, setMissing] = useState(false);
 
@@ -80,7 +83,7 @@ export default function DocumentDetail() {
         }
         subtitle={`${doc.page_count} pages · ${fmtBytes(doc.size_bytes)} · added ${fmtDate(doc.created_at)}`}
       >
-        <Button onClick={() => window.open(`/api/documents/${doc.id}/file`, "_blank")}>
+        <Button onClick={() => setPreviewing(true)}>
           <Download className="size-4" />
           Preview
         </Button>
@@ -185,6 +188,8 @@ export default function DocumentDetail() {
           ) : null}
         </section>
       </div>
+
+      {previewing && <Suspense fallback={<p role="status">Loading preview…</p>}><PdfPreview url={`/api/documents/${doc.id}/file`} name={doc.name} onClose={() => setPreviewing(false)} /></Suspense>}
 
       {creating ? (
         <LinkDialog
